@@ -1,8 +1,10 @@
 import express, { json } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import 'express-async-errors';
 
 import router from './routes/router';
+import errorHandler from './middlewares/errorHandlerMiddleware';
 
 dotenv.config();
 
@@ -13,7 +15,9 @@ app.use(json());
 
 app.use(router);
 
-const PORT: number = +process.env.PORT || 4000;
+app.use(errorHandler);
+
+const PORT: number = Number(process.env.PORT) || 4000;
 
 app.listen(PORT, () => {
     // eslint-disable-next-line no-console
