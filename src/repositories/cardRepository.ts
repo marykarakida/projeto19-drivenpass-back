@@ -3,8 +3,12 @@ import client from '../config/database';
 
 export type ICardData = Omit<Card, 'id' | 'createdAt'>;
 
-export async function findAllCards() {
-    //
+export async function findAllCards(ownerId: number) {
+    const result = await client.card.findMany({
+        where: { ownerId },
+    });
+
+    return result;
 }
 
 export async function findCardById() {

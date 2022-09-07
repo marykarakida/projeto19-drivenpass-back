@@ -8,6 +8,9 @@ import newCardSchema from '../schemas/cards';
 
 const router = Router();
 
-router.route('/').post(validateToken, validateSchema(newCardSchema), cardController.createCard);
+router
+    .route('/')
+    .get(validateToken, cardController.getAllCards)
+    .post(validateToken, validateSchema(newCardSchema), cardController.createCard);
 
 export default router;

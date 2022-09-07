@@ -2,8 +2,12 @@ import { Request, Response } from 'express';
 
 import * as cardService from '../services/cardService';
 
-export async function getAllCards() {
-    //
+export async function getAllCards(req: Request, res: Response) {
+    const { userId: ownerId } = res.locals;
+
+    const cards = await cardService.getAllDecryptedCards(Number(ownerId));
+
+    res.status(200).send(cards);
 }
 
 export async function getCardById() {
