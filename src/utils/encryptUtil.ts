@@ -14,10 +14,10 @@ export function validatePassword(password: string, hashedPassword: string) {
     return bcrypt.compareSync(password, hashedPassword);
 }
 
-export function encryptPassword(password: string) {
+export function encryptData(password: string) {
     return cryptr.encrypt(password);
 }
 
-export function decryptPassword(array: { password: string }[]) {
-    return array.map((element) => ({ ...element, password: cryptr.decrypt(element.password) }));
+export function decryptData(data: string) {
+    return cryptr.decrypt(data);
 }
