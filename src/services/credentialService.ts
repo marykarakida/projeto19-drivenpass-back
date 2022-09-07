@@ -42,9 +42,9 @@ export async function getDecryptedCredentialById(id: number, ownerId: number) {
 export async function createCredential(credentialData: credentialRepository.ICredentialData) {
     const { ownerId, title, url, username, password } = credentialData;
 
-    const credential = await credentialRepository.findCredentialByOwnerIdAndTitle(ownerId, title);
+    const duplicatedCredential = await credentialRepository.findCredentialByOwnerIdAndTitle(ownerId, title);
 
-    if (credential) {
+    if (duplicatedCredential) {
         throw CustomError('error_conflict', 'Credential with same title already exists');
     }
 
