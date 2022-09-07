@@ -6,13 +6,25 @@ import { encryptPassword, decryptPassword } from '../utils/encryptUtil';
 export async function getAllCredentials(ownerId: number) {
     const credentials = await credentialRepository.getAllCredentials(ownerId);
 
-    const descryptedCredentials = decryptPassword(credentials);
+    const decryptedCredentials = decryptPassword(credentials);
 
-    return descryptedCredentials;
+    return decryptedCredentials;
 }
 
-export async function getCredentialById() {
-    //
+export async function getCredentialById(id: number, ownerId: number) {
+    const credential = await credentialRepository.getCredentialById(id);
+
+    if (!credential) {
+        throw CustomError('error_not_found', 'Could not find specified credential');
+    }
+
+    if (credential.ownerId !== ownerId) {
+        throw CustomError('error_forbidden', 'Cannot access credential');
+    }
+
+    const [decryptedCredential] = decryptPassword([credential]);
+
+    return decryptedCredential;
 }
 
 export async function createCredential(credentialData: credentialRepository.ICredentialData) {

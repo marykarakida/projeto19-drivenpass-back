@@ -10,8 +10,13 @@ export async function getAllCredentials(req: Request, res: Response) {
     res.status(200).send(credentials);
 }
 
-export async function getCredentialById() {
-    //
+export async function getCredentialById(req: Request, res: Response) {
+    const { id } = req.params;
+    const { userId: ownerId } = res.locals;
+
+    const credential = await credentialService.getCredentialById(Number(id), Number(ownerId));
+
+    res.status(200).send(credential);
 }
 
 export async function createCredential(req: Request, res: Response) {

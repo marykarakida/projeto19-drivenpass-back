@@ -11,8 +11,12 @@ export async function getAllCredentials(ownerId: number) {
     return result;
 }
 
-export async function getCredentialById() {
-    //
+export async function getCredentialById(id: number) {
+    const result = await client.credentials.findFirst({
+        where: { id },
+    });
+
+    return result;
 }
 
 export async function getCredentialByOwnerIdAndTitle(ownerId: number, title: string) {
