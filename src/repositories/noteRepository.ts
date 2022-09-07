@@ -3,8 +3,12 @@ import client from '../config/database';
 
 export type INoteData = Omit<notes, 'id' | 'createdAt'>;
 
-export async function findtAllNotes() {
-    //
+export async function findtAllNotes(ownerId: number) {
+    const result = await client.notes.findMany({
+        where: { ownerId },
+    });
+
+    return result;
 }
 
 export async function findNoteById() {

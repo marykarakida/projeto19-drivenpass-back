@@ -8,6 +8,9 @@ import newNoteSchema from '../schemas/notes';
 
 const router = Router();
 
-router.route('/').post(validateToken, validateSchema(newNoteSchema), notesController.createNote);
+router
+    .route('/')
+    .get(validateToken, notesController.getAllNotes)
+    .post(validateToken, validateSchema(newNoteSchema), notesController.createNote);
 
 export default router;

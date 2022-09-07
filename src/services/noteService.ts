@@ -1,8 +1,10 @@
 import * as noteRepository from '../repositories/noteRepository';
 import { CustomError } from '../middlewares/errorHandlerMiddleware';
 
-export async function getAllNotes() {
-    //
+export async function getAllNotes(ownerId: number) {
+    const notes = await noteRepository.findtAllNotes(ownerId);
+
+    return notes;
 }
 
 export async function getNoteById() {
