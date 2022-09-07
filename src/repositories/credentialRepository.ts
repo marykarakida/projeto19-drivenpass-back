@@ -1,7 +1,7 @@
-import { credentials } from '@prisma/client';
+import { Credentials } from '@prisma/client';
 import client from '../config/database';
 
-export type ICredentialData = Omit<credentials, 'id' | 'createdAt'>;
+export type ICredentialData = Omit<Credentials, 'id' | 'createdAt'>;
 
 export async function findAllCredentials(ownerId: number) {
     const result = await client.credentials.findMany({

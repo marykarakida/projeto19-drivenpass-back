@@ -1,7 +1,7 @@
-import { notes } from '@prisma/client';
+import { Notes } from '@prisma/client';
 import client from '../config/database';
 
-export type INoteData = Omit<notes, 'id' | 'createdAt'>;
+export type INoteData = Omit<Notes, 'id' | 'createdAt'>;
 
 export async function findtAllNotes(ownerId: number) {
     const result = await client.notes.findMany({
