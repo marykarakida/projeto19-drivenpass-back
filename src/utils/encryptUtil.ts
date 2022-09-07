@@ -7,6 +7,10 @@ export async function hashPassword(password: string) {
     return hashedPassword;
 }
 
+export function validatePassword(password: string, hashedPassword: string) {
+    return bcrypt.compareSync(password, hashedPassword);
+}
+
 export function cryptPassword() {
     //
 }

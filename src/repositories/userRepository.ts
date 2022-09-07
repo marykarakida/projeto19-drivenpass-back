@@ -1,12 +1,7 @@
+import { users } from '@prisma/client';
 import client from '../config/database';
 
-export interface IUser {
-    id: number;
-    email: string;
-    password: string;
-}
-
-export type IUserInsertData = Omit<IUser, 'id'>;
+export type IUserInsertData = Omit<users, 'id' | 'createdAt'>;
 
 export async function findByEmail(email: string) {
     const result = await client.users.findUnique({

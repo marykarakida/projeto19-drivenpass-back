@@ -11,5 +11,9 @@ export async function register(req: Request, res: Response) {
 }
 
 export async function login(req: Request, res: Response) {
-    //
+    const { email, password } = req.body;
+
+    const { token } = await userService.createSession(email, password);
+
+    res.status(200).send({ token });
 }
