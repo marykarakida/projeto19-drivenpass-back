@@ -13,4 +13,6 @@ router
     .get(validateToken, cardController.getAllCards)
     .post(validateToken, validateSchema(newCardSchema), cardController.createCard);
 
+router.route('/:id').get(validateToken, cardController.getCardById);
+
 export default router;

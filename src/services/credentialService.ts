@@ -3,12 +3,6 @@ import { CustomError } from '../middlewares/errorHandlerMiddleware';
 
 import { encryptData, decryptData } from '../utils/encryptUtil';
 
-export async function getAllCredentials(ownerId: number) {
-    const credentials = await credentialRepository.findAllCredentials(ownerId);
-
-    return credentials;
-}
-
 export async function getCredentialById(id: number, ownerId: number) {
     const credential = await credentialRepository.findCredentialById(id);
 
@@ -24,7 +18,7 @@ export async function getCredentialById(id: number, ownerId: number) {
 }
 
 export async function getAllDecryptedCredentials(ownerId: number) {
-    const credentials = await getAllCredentials(ownerId);
+    const credentials = await credentialRepository.findAllCredentials(ownerId);
 
     const decryptedCredentials = credentials.map((credential) => ({ ...credential, password: decryptData(credential.password) }));
 

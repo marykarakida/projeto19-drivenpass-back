@@ -11,8 +11,12 @@ export async function findAllCards(ownerId: number) {
     return result;
 }
 
-export async function findCardById() {
-    //
+export async function findCardById(id: number) {
+    const result = await client.card.findFirst({
+        where: { id },
+    });
+
+    return result;
 }
 
 export async function findCardByOwnerIdAndTitle(ownerId: number, title: string) {

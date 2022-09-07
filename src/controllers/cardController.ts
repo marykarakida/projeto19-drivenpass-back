@@ -10,8 +10,13 @@ export async function getAllCards(req: Request, res: Response) {
     res.status(200).send(cards);
 }
 
-export async function getCardById() {
-    //
+export async function getCardById(req: Request, res: Response) {
+    const { id } = req.params;
+    const { userId: ownerId } = res.locals;
+
+    const card = await cardService.getDecryptedCardById(Number(id), Number(ownerId));
+
+    res.status(200).send(card);
 }
 
 export async function createCard(req: Request, res: Response) {
