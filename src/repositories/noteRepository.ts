@@ -1,10 +1,10 @@
-import { Notes } from '@prisma/client';
+import { Note } from '@prisma/client';
 import client from '../config/database';
 
-export type INoteData = Omit<Notes, 'id' | 'createdAt'>;
+export type INoteData = Omit<Note, 'id' | 'createdAt'>;
 
 export async function findtAllNotes(ownerId: number) {
-    const result = await client.notes.findMany({
+    const result = await client.note.findMany({
         where: { ownerId },
     });
 
@@ -12,7 +12,7 @@ export async function findtAllNotes(ownerId: number) {
 }
 
 export async function findNoteById(id: number) {
-    const result = await client.notes.findFirst({
+    const result = await client.note.findFirst({
         where: { id },
     });
 
@@ -20,7 +20,7 @@ export async function findNoteById(id: number) {
 }
 
 export async function findNoteByOwnerIdAndTitle(ownerId: number, title: string) {
-    const result = await client.notes.findUnique({
+    const result = await client.note.findUnique({
         where: { ownerId_title: { ownerId, title } },
     });
 
@@ -30,13 +30,13 @@ export async function findNoteByOwnerIdAndTitle(ownerId: number, title: string) 
 export async function insertNote(noteData: INoteData) {
     const { ownerId, title, note } = noteData;
 
-    await client.notes.create({
+    await client.note.create({
         data: { ownerId, title, note },
     });
 }
 
 export async function deleteNote(id: number) {
-    await client.notes.delete({
+    await client.note.delete({
         where: { id },
     });
 }

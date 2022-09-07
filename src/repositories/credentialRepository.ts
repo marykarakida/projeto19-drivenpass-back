@@ -1,10 +1,10 @@
-import { Credentials } from '@prisma/client';
+import { Credential } from '@prisma/client';
 import client from '../config/database';
 
-export type ICredentialData = Omit<Credentials, 'id' | 'createdAt'>;
+export type ICredentialData = Omit<Credential, 'id' | 'createdAt'>;
 
 export async function findAllCredentials(ownerId: number) {
-    const result = await client.credentials.findMany({
+    const result = await client.credential.findMany({
         where: { ownerId },
     });
 
@@ -12,7 +12,7 @@ export async function findAllCredentials(ownerId: number) {
 }
 
 export async function findCredentialById(id: number) {
-    const result = await client.credentials.findFirst({
+    const result = await client.credential.findFirst({
         where: { id },
     });
 
@@ -20,7 +20,7 @@ export async function findCredentialById(id: number) {
 }
 
 export async function findCredentialByOwnerIdAndTitle(ownerId: number, title: string) {
-    const result = await client.credentials.findUnique({
+    const result = await client.credential.findUnique({
         where: { ownerId_title: { ownerId, title } },
     });
 
@@ -30,13 +30,13 @@ export async function findCredentialByOwnerIdAndTitle(ownerId: number, title: st
 export async function insertCredential(credentialData: ICredentialData) {
     const { ownerId, title, url, username, password } = credentialData;
 
-    await client.credentials.create({
+    await client.credential.create({
         data: { ownerId, title, url, username, password },
     });
 }
 
 export async function deleteCredential(id: number) {
-    await client.credentials.delete({
+    await client.credential.delete({
         where: { id },
     });
 }
