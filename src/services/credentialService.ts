@@ -6,9 +6,7 @@ import { encryptPassword, decryptPassword } from '../utils/encryptUtil';
 export async function getAllCredentials(ownerId: number) {
     const credentials = await credentialRepository.getAllCredentials(ownerId);
 
-    const decryptedCredentials = decryptPassword(credentials);
-
-    return decryptedCredentials;
+    return credentials;
 }
 
 export async function getCredentialById(id: number, ownerId: number) {
@@ -21,6 +19,20 @@ export async function getCredentialById(id: number, ownerId: number) {
     if (credential.ownerId !== ownerId) {
         throw CustomError('error_forbidden', 'Cannot access credential');
     }
+
+    return credential;
+}
+
+export async function getAllDecryptedCredentials(ownerId: number) {
+    const credentials = await getAllCredentials(ownerId);
+
+    const decryptedCredentials = decryptPassword(credentials);
+
+    return decryptedCredentials;
+}
+
+export async function getDecryptedCredentialById(id: number, ownerId: number) {
+    const credential = await getCredentialById(id, ownerId);
 
     const [decryptedCredential] = decryptPassword([credential]);
 
@@ -39,6 +51,8 @@ export async function createCredential(credentialData: credentialRepository.ICre
     await credentialRepository.createCredential({ ownerId, title, url, username, password: encryptPassword(password) });
 }
 
-export async function deleteCredential() {
-    //
+export async function deleteCredential(id: number, ownerId: number) {
+    await getCredentialById(id, ownerId);
+
+    await credentialRepository.deleteCredential(id);
 }

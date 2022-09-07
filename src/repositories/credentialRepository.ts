@@ -33,9 +33,10 @@ export async function createCredential(credentialData: ICredentialData) {
     await client.credentials.create({
         data: { ownerId, title, url, username, password },
     });
-    //
 }
 
-export async function deleteCredential() {
-    //
+export async function deleteCredential(id: number) {
+    await client.credentials.delete({
+        where: { id },
+    });
 }

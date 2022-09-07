@@ -13,6 +13,9 @@ router
     .get(validateToken, credentialController.getAllCredentials)
     .post(validateToken, validateSchema(newCredentialSchema), credentialController.createCredential);
 
-router.route('/:id').get(validateToken, credentialController.getCredentialById);
+router
+    .route('/:id')
+    .get(validateToken, credentialController.getCredentialById)
+    .delete(validateToken, credentialController.deleteCredential);
 
 export default router;
