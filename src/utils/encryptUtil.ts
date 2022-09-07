@@ -17,3 +17,7 @@ export function validatePassword(password: string, hashedPassword: string) {
 export function encryptPassword(password: string) {
     return cryptr.encrypt(password);
 }
+
+export function decryptPassword(array: { password: string }[]) {
+    return array.map((element) => ({ ...element, password: cryptr.decrypt(element.password) }));
+}

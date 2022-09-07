@@ -1,10 +1,14 @@
 import * as credentialRepository from '../repositories/credentialRepository';
 import { CustomError } from '../middlewares/errorHandlerMiddleware';
 
-import { encryptPassword } from '../utils/encryptUtil';
+import { encryptPassword, decryptPassword } from '../utils/encryptUtil';
 
-export async function getAllCredentials() {
-    //
+export async function getAllCredentials(ownerId: number) {
+    const credentials = await credentialRepository.getAllCredentials(ownerId);
+
+    const descryptedCredentials = decryptPassword(credentials);
+
+    return descryptedCredentials;
 }
 
 export async function getCredentialById() {

@@ -3,8 +3,12 @@ import client from '../config/database';
 
 export type ICredentialData = Omit<credentials, 'id' | 'createdAt'>;
 
-export async function getAllCredentials() {
-    //
+export async function getAllCredentials(ownerId: number) {
+    const result = await client.credentials.findMany({
+        where: { ownerId },
+    });
+
+    return result;
 }
 
 export async function getCredentialById() {
