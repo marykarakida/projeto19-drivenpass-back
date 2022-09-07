@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 const ERRORS = {
     error_bad_request: 400,
     error_unauthorized: 401,
+    error_forbidden: 403,
     error_not_found: 404,
     error_conflict: 409,
     error_unprocessable_entity: 422,

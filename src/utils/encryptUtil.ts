@@ -1,4 +1,7 @@
 import bcrypt from 'bcrypt';
+import Cryptr from 'cryptr';
+
+const cryptr = new Cryptr(process.env.CRYPT_SECRET as string);
 
 export async function hashPassword(password: string) {
     const salt = await bcrypt.genSalt();
@@ -11,6 +14,10 @@ export function validatePassword(password: string, hashedPassword: string) {
     return bcrypt.compareSync(password, hashedPassword);
 }
 
-export function cryptPassword() {
-    //
+export function encryptPassword(password: string) {
+    return cryptr.encrypt(password);
+}
+
+export function decryptPassword(array: { password: string }[]) {
+    return array.map((element) => ({ ...element, password: cryptr.decrypt(element.password) }));
 }

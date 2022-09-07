@@ -5,6 +5,12 @@ import { CustomError } from '../middlewares/errorHandlerMiddleware';
 
 import { hashPassword, validatePassword } from '../utils/encryptUtil';
 
+export async function getById(id: number) {
+    const user = await userRepository.findById(id);
+
+    return user;
+}
+
 export async function createUser(email: string, password: string) {
     const user = await userRepository.findByEmail(email);
 
