@@ -35,6 +35,8 @@ export async function insertNote(noteData: INoteData) {
     });
 }
 
-export async function deleteNote() {
-    //
+export async function deleteNote(id: number) {
+    await client.notes.delete({
+        where: { id },
+    });
 }

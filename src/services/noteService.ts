@@ -33,6 +33,8 @@ export async function createNote(noteData: noteRepository.INoteData) {
     await noteRepository.insertNote({ ownerId, title, note });
 }
 
-export async function deleteNote() {
-    //
+export async function deleteNote(id: number, ownerId: number) {
+    await getNoteById(id, ownerId);
+
+    await noteRepository.deleteNote(id);
 }

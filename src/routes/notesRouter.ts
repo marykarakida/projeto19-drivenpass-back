@@ -13,6 +13,6 @@ router
     .get(validateToken, notesController.getAllNotes)
     .post(validateToken, validateSchema(newNoteSchema), notesController.createNote);
 
-router.route('/:id').get(validateToken, notesController.getNoteById);
+router.route('/:id').get(validateToken, notesController.getNoteById).delete(validateToken, notesController.deleteNote);
 
 export default router;

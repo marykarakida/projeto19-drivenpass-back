@@ -28,6 +28,11 @@ export async function createNote(req: Request, res: Response) {
     res.status(201).send();
 }
 
-export async function deleteNote() {
-    //
+export async function deleteNote(req: Request, res: Response) {
+    const { id } = req.params;
+    const { userId: ownerId } = res.locals;
+
+    await noteService.deleteNote(Number(id), Number(ownerId));
+
+    res.status(200).send();
 }
