@@ -7,9 +7,20 @@ export async function getAllNotes(ownerId: number) {
     return notes;
 }
 
-export async function getNoteById() {
-    //
+export async function getNoteById(id: number, ownerId: number) {
+    const note = await noteRepository.findNoteById(id);
+
+    if (!note) {
+        throw CustomError('error_not_found', 'Could not find specified note');
+    }
+
+    if (note.ownerId !== ownerId) {
+        throw CustomError('error_forbidden', 'Cannot access note');
+    }
+
+    return note;
 }
+
 export async function createNote(noteData: noteRepository.INoteData) {
     const { ownerId, title, note } = noteData;
 
@@ -21,6 +32,7 @@ export async function createNote(noteData: noteRepository.INoteData) {
 
     await noteRepository.insertNote({ ownerId, title, note });
 }
+
 export async function deleteNote() {
     //
 }

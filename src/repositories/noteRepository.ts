@@ -11,8 +11,12 @@ export async function findtAllNotes(ownerId: number) {
     return result;
 }
 
-export async function findNoteById() {
-    //
+export async function findNoteById(id: number) {
+    const result = await client.notes.findFirst({
+        where: { id },
+    });
+
+    return result;
 }
 
 export async function findNoteByOwnerIdAndTitle(ownerId: number, title: string) {
@@ -30,6 +34,7 @@ export async function insertNote(noteData: INoteData) {
         data: { ownerId, title, note },
     });
 }
+
 export async function deleteNote() {
     //
 }

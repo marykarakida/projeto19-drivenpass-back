@@ -10,9 +10,15 @@ export async function getAllNotes(req: Request, res: Response) {
     res.status(200).send(notes);
 }
 
-export async function getNoteById() {
-    //
+export async function getNoteById(req: Request, res: Response) {
+    const { id } = req.params;
+    const { userId: ownerId } = res.locals;
+
+    const note = await noteService.getNoteById(Number(id), Number(ownerId));
+
+    res.status(200).send(note);
 }
+
 export async function createNote(req: Request, res: Response) {
     const { userId: ownerId } = res.locals;
     const { title, note } = req.body;
@@ -21,6 +27,7 @@ export async function createNote(req: Request, res: Response) {
 
     res.status(201).send();
 }
+
 export async function deleteNote() {
     //
 }
