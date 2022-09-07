@@ -7,15 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
+model Users {
   id          Int           @id @default(autoincrement())
   email       String        @unique
   password    String
   createdAt   DateTime      @default(now()) @db.Timestamp(6)
-  credentials credentials[]
+  Credentials Credentials[]
+  Notes       Notes[]
 }
 
-model credentials {
+model Credentials {
   id        Int      @id @default(autoincrement())
   ownerId   Int
   title     String
@@ -23,7 +24,18 @@ model credentials {
   username  String
   password  String
   createdAt DateTime @default(now()) @db.Timestamp(6)
-  users     users    @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  Users     Users    @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([ownerId, title])
+}
+
+model Notes {
+  id        Int      @id @default(autoincrement())
+  ownerId   Int
+  title     String
+  note      String
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  Users     Users    @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([ownerId, title])
 }

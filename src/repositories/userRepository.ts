@@ -1,7 +1,7 @@
-import { users } from '@prisma/client';
+import { Users } from '@prisma/client';
 import client from '../config/database';
 
-export type IUserInsertData = Omit<users, 'id' | 'createdAt'>;
+export type IUserInsertData = Omit<Users, 'id' | 'createdAt'>;
 
 export async function findById(id: number) {
     const result = await client.users.findUnique({

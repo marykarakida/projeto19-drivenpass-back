@@ -4,13 +4,13 @@ import { CustomError } from '../middlewares/errorHandlerMiddleware';
 import { encryptPassword, decryptPassword } from '../utils/encryptUtil';
 
 export async function getAllCredentials(ownerId: number) {
-    const credentials = await credentialRepository.getAllCredentials(ownerId);
+    const credentials = await credentialRepository.findAllCredentials(ownerId);
 
     return credentials;
 }
 
 export async function getCredentialById(id: number, ownerId: number) {
-    const credential = await credentialRepository.getCredentialById(id);
+    const credential = await credentialRepository.findCredentialById(id);
 
     if (!credential) {
         throw CustomError('error_not_found', 'Could not find specified credential');
@@ -42,13 +42,13 @@ export async function getDecryptedCredentialById(id: number, ownerId: number) {
 export async function createCredential(credentialData: credentialRepository.ICredentialData) {
     const { ownerId, title, url, username, password } = credentialData;
 
-    const credential = await credentialRepository.getCredentialByOwnerIdAndTitle(ownerId, title);
+    const duplicatedCredential = await credentialRepository.findCredentialByOwnerIdAndTitle(ownerId, title);
 
-    if (credential) {
+    if (duplicatedCredential) {
         throw CustomError('error_conflict', 'Credential with same title already exists');
     }
 
-    await credentialRepository.createCredential({ ownerId, title, url, username, password: encryptPassword(password) });
+    await credentialRepository.insertCredential({ ownerId, title, url, username, password: encryptPassword(password) });
 }
 
 export async function deleteCredential(id: number, ownerId: number) {
