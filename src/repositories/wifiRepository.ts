@@ -3,8 +3,12 @@ import client from '../config/database';
 
 export type IWifiData = Omit<Wifi, 'id' | 'createdAt'>;
 
-export async function findAllWifis() {
-    //
+export async function findAllWifis(ownerId: string) {
+    const result = await client.wifi.findMany({
+        where: { ownerId },
+    });
+
+    return result;
 }
 
 export async function findWifiById() {

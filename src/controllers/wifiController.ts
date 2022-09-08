@@ -2,8 +2,12 @@ import { Request, Response } from 'express';
 
 import * as wifiService from '../services/wifiService';
 
-export async function getAllWifis() {
-    //
+export async function getAllWifis(req: Request, res: Response) {
+    const { userId: ownerId } = res.locals;
+
+    const wifis = await wifiService.getAllDecryptedWifis(ownerId);
+
+    res.status(200).send(wifis);
 }
 
 export async function getWifiById() {

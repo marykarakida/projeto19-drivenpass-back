@@ -7,8 +7,15 @@ export async function getWifiById() {
     //
 }
 
-export async function getAllDecryptedWifis() {
-    //
+export async function getAllDecryptedWifis(ownerId: string) {
+    const wifis = await wifiRepository.findAllWifis(ownerId);
+
+    const decryptedWifis = wifis.map((wifi) => ({
+        ...wifi,
+        password: decryptData(wifi.password),
+    }));
+
+    return decryptedWifis;
 }
 
 export async function getDecryptedWifiById() {
