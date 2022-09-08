@@ -28,6 +28,11 @@ export async function createWifi(req: Request, res: Response) {
     res.status(201).send();
 }
 
-export async function deleteNote() {
-    //
+export async function deleteWifi(req: Request, res: Response) {
+    const { id } = req.params;
+    const { userId: ownerId } = res.locals;
+
+    await wifiService.deleteWifi(id, ownerId);
+
+    res.status(200).send();
 }

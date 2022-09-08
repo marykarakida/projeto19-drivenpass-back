@@ -47,6 +47,8 @@ export async function createWifi(wifiData: wifiRepository.IWifiData) {
     });
 }
 
-export async function deleteCard() {
-    //
+export async function deleteWifi(id: string, ownerId: string) {
+    await getWifiById(id, ownerId);
+
+    await wifiRepository.deleteWifi(id);
 }

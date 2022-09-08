@@ -27,6 +27,8 @@ export async function insertWifi(wifiData: IWifiData) {
     });
 }
 
-export async function deleteWifi() {
-    //
+export async function deleteWifi(id: string) {
+    await client.wifi.delete({
+        where: { id },
+    });
 }
