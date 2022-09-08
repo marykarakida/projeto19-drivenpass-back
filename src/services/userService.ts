@@ -5,7 +5,7 @@ import { CustomError } from '../middlewares/errorHandlerMiddleware';
 
 import { hashPassword, validatePassword } from '../utils/encryptUtil';
 
-export async function getById(id: number) {
+export async function getById(id: string) {
     const user = await userRepository.findById(id);
 
     return user;

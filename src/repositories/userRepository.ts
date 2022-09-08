@@ -1,10 +1,10 @@
-import { Users } from '@prisma/client';
+import { User } from '@prisma/client';
 import client from '../config/database';
 
-export type IUserInsertData = Omit<Users, 'id' | 'createdAt'>;
+export type IUserInsertData = Omit<User, 'id' | 'createdAt'>;
 
-export async function findById(id: number) {
-    const result = await client.users.findUnique({
+export async function findById(id: string) {
+    const result = await client.user.findUnique({
         where: { id },
     });
 
@@ -12,7 +12,7 @@ export async function findById(id: number) {
 }
 
 export async function findByEmail(email: string) {
-    const result = await client.users.findUnique({
+    const result = await client.user.findUnique({
         where: { email },
     });
 
@@ -22,7 +22,7 @@ export async function findByEmail(email: string) {
 export async function insert(userData: IUserInsertData) {
     const { email, password } = userData;
 
-    await client.users.create({
+    await client.user.create({
         data: { email, password },
     });
 }

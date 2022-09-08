@@ -7,35 +7,66 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
-  id          Int           @id @default(autoincrement())
-  email       String        @unique
-  password    String
-  createdAt   DateTime      @default(now()) @db.Timestamp(6)
-  Credentials Credentials[]
-  Notes       Notes[]
+model User {
+  id         String       @id @default(uuid())
+  email      String       @unique
+  password   String
+  createdAt  DateTime     @default(now()) @db.Timestamp(6)
+  Credential Credential[]
+  Note       Note[]
+  Card       Card[]
+
+  @@map("users")
 }
 
-model Credentials {
-  id        Int      @id @default(autoincrement())
-  ownerId   Int
+model Credential {
+  id        String   @id @default(uuid())
+  ownerId   String
   title     String
   url       String
   username  String
   password  String
   createdAt DateTime @default(now()) @db.Timestamp(6)
-  Users     Users    @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  User      User     @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([ownerId, title])
+  @@map("credentials")
 }
 
-model Notes {
-  id        Int      @id @default(autoincrement())
-  ownerId   Int
+model Note {
+  id        String   @id @default(uuid())
+  ownerId   String
   title     String
   note      String
   createdAt DateTime @default(now()) @db.Timestamp(6)
-  Users     Users    @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  User      User     @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([ownerId, title])
+  @@map("notes")
+}
+
+enum CardType {
+  credit
+  debit
+  both
+
+  @@map("cardTypes")
+}
+
+model Card {
+  id             String   @id @default(uuid())
+  ownerId        String
+  title          String
+  number         String
+  cardHolderName String
+  expirationDate String
+  securityCode   String
+  password       String
+  isVirtual      Boolean
+  type           CardType
+  createdAt      DateTime @default(now()) @db.Timestamp(6)
+  User           User     @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([ownerId, title])
+  @@map("cards")
 }
