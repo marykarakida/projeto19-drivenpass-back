@@ -11,6 +11,6 @@ router
     .get(validateToken, wifiController.getAllWifis)
     .post(validateToken, validateSchema('newWifiSchema'), wifiController.createWifi);
 
-router.route('/:id').get(validateToken).delete(validateToken);
+router.route('/:id').get(validateToken, wifiController.getWifiById).delete(validateToken);
 
 export default router;

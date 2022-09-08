@@ -10,8 +10,13 @@ export async function getAllWifis(req: Request, res: Response) {
     res.status(200).send(wifis);
 }
 
-export async function getWifiById() {
-    //
+export async function getWifiById(req: Request, res: Response) {
+    const { id } = req.params;
+    const { userId: ownerId } = res.locals;
+
+    const wifi = await wifiService.getDecryptedWifiById(id, ownerId);
+
+    res.status(200).send(wifi);
 }
 
 export async function createWifi(req: Request, res: Response) {

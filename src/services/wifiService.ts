@@ -3,8 +3,18 @@ import { CustomError } from '../middlewares/errorHandlerMiddleware';
 
 import { encryptData, decryptData } from '../utils/encryptUtil';
 
-export async function getWifiById() {
-    //
+export async function getWifiById(id: string, ownerId: string) {
+    const wifi = await wifiRepository.findWifiById(id);
+
+    if (!wifi) {
+        throw CustomError('error_not_found', 'Could not find specified wifi');
+    }
+
+    if (wifi.ownerId !== ownerId) {
+        throw CustomError('error_forbidden', 'Cannot access wifi');
+    }
+
+    return wifi;
 }
 
 export async function getAllDecryptedWifis(ownerId: string) {
@@ -18,8 +28,12 @@ export async function getAllDecryptedWifis(ownerId: string) {
     return decryptedWifis;
 }
 
-export async function getDecryptedWifiById() {
-    //
+export async function getDecryptedWifiById(id: string, ownerId: string) {
+    const wifi = await getWifiById(id, ownerId);
+
+    const decryptedWifi = { ...wifi, password: decryptData(wifi.password) };
+
+    return decryptedWifi;
 }
 
 export async function createWifi(wifiData: wifiRepository.IWifiData) {

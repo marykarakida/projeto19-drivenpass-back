@@ -11,8 +11,12 @@ export async function findAllWifis(ownerId: string) {
     return result;
 }
 
-export async function findWifiById() {
-    //
+export async function findWifiById(id: string) {
+    const result = await client.wifi.findFirst({
+        where: { id },
+    });
+
+    return result;
 }
 
 export async function insertWifi(wifiData: IWifiData) {
