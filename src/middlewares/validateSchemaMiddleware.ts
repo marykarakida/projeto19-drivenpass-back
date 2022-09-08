@@ -1,11 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
-import { ObjectSchema } from 'joi';
 
 import { CustomError } from '../middlewares/errorHandlerMiddleware';
 
-function validateSchema(schema: ObjectSchema) {
+import schemas from '../schemas/schemas';
+
+type SchemasTypes = keyof typeof schemas;
+
+function validateSchema(schema: SchemasTypes) {
     return (req: Request, res: Response, next: NextFunction) => {
-        const { error } = schema.validate(req.body, { abortEarly: false });
+        const { error } = schemas[schema].validate(req.body, { abortEarly: false });
 
         if (error) {
             const errorMessages = error.details.map((detail: { message: string }) => detail.message);
