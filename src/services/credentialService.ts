@@ -3,7 +3,7 @@ import { CustomError } from '../middlewares/errorHandlerMiddleware';
 
 import { encryptData, decryptData } from '../utils/encryptUtil';
 
-export async function getCredentialById(id: number, ownerId: number) {
+export async function getCredentialById(id: string, ownerId: string) {
     const credential = await credentialRepository.findCredentialById(id);
 
     if (!credential) {
@@ -17,7 +17,7 @@ export async function getCredentialById(id: number, ownerId: number) {
     return credential;
 }
 
-export async function getAllDecryptedCredentials(ownerId: number) {
+export async function getAllDecryptedCredentials(ownerId: string) {
     const credentials = await credentialRepository.findAllCredentials(ownerId);
 
     const decryptedCredentials = credentials.map((credential) => ({ ...credential, password: decryptData(credential.password) }));
@@ -25,7 +25,7 @@ export async function getAllDecryptedCredentials(ownerId: number) {
     return decryptedCredentials;
 }
 
-export async function getDecryptedCredentialById(id: number, ownerId: number) {
+export async function getDecryptedCredentialById(id: string, ownerId: string) {
     const credential = await getCredentialById(id, ownerId);
 
     const decryptedCredential = { ...credential, password: decryptData(credential.password) };
@@ -45,7 +45,7 @@ export async function createCredential(credentialData: credentialRepository.ICre
     await credentialRepository.insertCredential({ ownerId, title, url, username, password: encryptData(password) });
 }
 
-export async function deleteCredential(id: number, ownerId: number) {
+export async function deleteCredential(id: string, ownerId: string) {
     await getCredentialById(id, ownerId);
 
     await credentialRepository.deleteCredential(id);

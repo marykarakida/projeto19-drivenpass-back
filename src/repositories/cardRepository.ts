@@ -3,7 +3,7 @@ import client from '../config/database';
 
 export type ICardData = Omit<Card, 'id' | 'createdAt'>;
 
-export async function findAllCards(ownerId: number) {
+export async function findAllCards(ownerId: string) {
     const result = await client.card.findMany({
         where: { ownerId },
     });
@@ -11,7 +11,7 @@ export async function findAllCards(ownerId: number) {
     return result;
 }
 
-export async function findCardById(id: number) {
+export async function findCardById(id: string) {
     const result = await client.card.findFirst({
         where: { id },
     });
@@ -19,7 +19,7 @@ export async function findCardById(id: number) {
     return result;
 }
 
-export async function findCardByOwnerIdAndTitle(ownerId: number, title: string) {
+export async function findCardByOwnerIdAndTitle(ownerId: string, title: string) {
     const result = await client.card.findUnique({
         where: { ownerId_title: { ownerId, title } },
     });
@@ -35,7 +35,7 @@ export async function insertCard(cardData: ICardData) {
     });
 }
 
-export async function deleteCard(id: number) {
+export async function deleteCard(id: string) {
     await client.card.delete({
         where: { id },
     });

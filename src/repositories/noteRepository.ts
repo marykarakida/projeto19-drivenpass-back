@@ -3,7 +3,7 @@ import client from '../config/database';
 
 export type INoteData = Omit<Note, 'id' | 'createdAt'>;
 
-export async function findtAllNotes(ownerId: number) {
+export async function findtAllNotes(ownerId: string) {
     const result = await client.note.findMany({
         where: { ownerId },
     });
@@ -11,7 +11,7 @@ export async function findtAllNotes(ownerId: number) {
     return result;
 }
 
-export async function findNoteById(id: number) {
+export async function findNoteById(id: string) {
     const result = await client.note.findFirst({
         where: { id },
     });
@@ -19,7 +19,7 @@ export async function findNoteById(id: number) {
     return result;
 }
 
-export async function findNoteByOwnerIdAndTitle(ownerId: number, title: string) {
+export async function findNoteByOwnerIdAndTitle(ownerId: string, title: string) {
     const result = await client.note.findUnique({
         where: { ownerId_title: { ownerId, title } },
     });
@@ -35,7 +35,7 @@ export async function insertNote(noteData: INoteData) {
     });
 }
 
-export async function deleteNote(id: number) {
+export async function deleteNote(id: string) {
     await client.note.delete({
         where: { id },
     });

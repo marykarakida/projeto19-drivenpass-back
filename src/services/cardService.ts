@@ -3,7 +3,7 @@ import { CustomError } from '../middlewares/errorHandlerMiddleware';
 
 import { encryptData, decryptData } from '../utils/encryptUtil';
 
-export async function getCardById(id: number, ownerId: number) {
+export async function getCardById(id: string, ownerId: string) {
     const card = await cardRepository.findCardById(id);
 
     if (!card) {
@@ -17,7 +17,7 @@ export async function getCardById(id: number, ownerId: number) {
     return card;
 }
 
-export async function getAllDecryptedCards(ownerId: number) {
+export async function getAllDecryptedCards(ownerId: string) {
     const cards = await cardRepository.findAllCards(ownerId);
 
     const decryptedCards = cards.map((card) => ({
@@ -29,7 +29,7 @@ export async function getAllDecryptedCards(ownerId: number) {
     return decryptedCards;
 }
 
-export async function getDecryptedCardById(id: number, ownerId: number) {
+export async function getDecryptedCardById(id: string, ownerId: string) {
     const card = await getCardById(id, ownerId);
 
     const decryptedCard = { ...card, securityCode: decryptData(card.securityCode), password: decryptData(card.password) };
@@ -59,7 +59,7 @@ export async function createCard(cardData: cardRepository.ICardData) {
     });
 }
 
-export async function deleteCard(id: number, ownerId: number) {
+export async function deleteCard(id: string, ownerId: string) {
     await getCardById(id, ownerId);
 
     await cardRepository.deleteCard(id);

@@ -3,7 +3,7 @@ import client from '../config/database';
 
 export type ICredentialData = Omit<Credential, 'id' | 'createdAt'>;
 
-export async function findAllCredentials(ownerId: number) {
+export async function findAllCredentials(ownerId: string) {
     const result = await client.credential.findMany({
         where: { ownerId },
     });
@@ -11,7 +11,7 @@ export async function findAllCredentials(ownerId: number) {
     return result;
 }
 
-export async function findCredentialById(id: number) {
+export async function findCredentialById(id: string) {
     const result = await client.credential.findFirst({
         where: { id },
     });
@@ -19,7 +19,7 @@ export async function findCredentialById(id: number) {
     return result;
 }
 
-export async function findCredentialByOwnerIdAndTitle(ownerId: number, title: string) {
+export async function findCredentialByOwnerIdAndTitle(ownerId: string, title: string) {
     const result = await client.credential.findUnique({
         where: { ownerId_title: { ownerId, title } },
     });
@@ -35,7 +35,7 @@ export async function insertCredential(credentialData: ICredentialData) {
     });
 }
 
-export async function deleteCredential(id: number) {
+export async function deleteCredential(id: string) {
     await client.credential.delete({
         where: { id },
     });

@@ -1,13 +1,13 @@
 import * as noteRepository from '../repositories/noteRepository';
 import { CustomError } from '../middlewares/errorHandlerMiddleware';
 
-export async function getAllNotes(ownerId: number) {
+export async function getAllNotes(ownerId: string) {
     const notes = await noteRepository.findtAllNotes(ownerId);
 
     return notes;
 }
 
-export async function getNoteById(id: number, ownerId: number) {
+export async function getNoteById(id: string, ownerId: string) {
     const note = await noteRepository.findNoteById(id);
 
     if (!note) {
@@ -33,7 +33,7 @@ export async function createNote(noteData: noteRepository.INoteData) {
     await noteRepository.insertNote({ ownerId, title, note });
 }
 
-export async function deleteNote(id: number, ownerId: number) {
+export async function deleteNote(id: string, ownerId: string) {
     await getNoteById(id, ownerId);
 
     await noteRepository.deleteNote(id);

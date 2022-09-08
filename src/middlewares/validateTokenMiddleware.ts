@@ -5,7 +5,7 @@ import * as userService from '../services/userService';
 import { CustomError } from './errorHandlerMiddleware';
 
 interface IToken {
-    id: number;
+    id: string;
 }
 
 export default async function validateToken(req: Request, res: Response, next: NextFunction) {

@@ -3,7 +3,7 @@ import client from '../config/database';
 
 export type IUserInsertData = Omit<User, 'id' | 'createdAt'>;
 
-export async function findById(id: number) {
+export async function findById(id: string) {
     const result = await client.user.findUnique({
         where: { id },
     });

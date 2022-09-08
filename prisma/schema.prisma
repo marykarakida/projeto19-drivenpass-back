@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id         Int          @id @default(autoincrement())
+  id         String       @id @default(uuid())
   email      String       @unique
   password   String
   createdAt  DateTime     @default(now()) @db.Timestamp(6)
@@ -20,8 +20,8 @@ model User {
 }
 
 model Credential {
-  id        Int      @id @default(autoincrement())
-  ownerId   Int
+  id        String   @id @default(uuid())
+  ownerId   String
   title     String
   url       String
   username  String
@@ -34,8 +34,8 @@ model Credential {
 }
 
 model Note {
-  id        Int      @id @default(autoincrement())
-  ownerId   Int
+  id        String   @id @default(uuid())
+  ownerId   String
   title     String
   note      String
   createdAt DateTime @default(now()) @db.Timestamp(6)
@@ -54,8 +54,8 @@ enum CardType {
 }
 
 model Card {
-  id             Int      @id @default(autoincrement())
-  ownerId        Int
+  id             String   @id @default(uuid())
+  ownerId        String
   title          String
   number         String
   cardHolderName String
