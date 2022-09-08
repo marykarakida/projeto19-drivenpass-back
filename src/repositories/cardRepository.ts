@@ -35,6 +35,8 @@ export async function insertCard(cardData: ICardData) {
     });
 }
 
-export async function deleteCard() {
-    //
+export async function deleteCard(id: number) {
+    await client.card.delete({
+        where: { id },
+    });
 }

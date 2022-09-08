@@ -1,11 +1,9 @@
-import { Card } from '@prisma/client';
-
 import * as cardRepository from '../repositories/cardRepository';
 import { CustomError } from '../middlewares/errorHandlerMiddleware';
 
 import { encryptData, decryptData } from '../utils/encryptUtil';
 
-export async function findCardById(id: number, ownerId: number) {
+export async function getCardById(id: number, ownerId: number) {
     const card = await cardRepository.findCardById(id);
 
     if (!card) {
@@ -32,7 +30,7 @@ export async function getAllDecryptedCards(ownerId: number) {
 }
 
 export async function getDecryptedCardById(id: number, ownerId: number) {
-    const card = await findCardById(id, ownerId);
+    const card = await getCardById(id, ownerId);
 
     const decryptedCard = { ...card, securityCode: decryptData(card.securityCode), password: decryptData(card.password) };
 
@@ -61,6 +59,8 @@ export async function createCard(cardData: cardRepository.ICardData) {
     });
 }
 
-export async function deleteCard() {
-    ///
+export async function deleteCard(id: number, ownerId: number) {
+    await getCardById(id, ownerId);
+
+    await cardRepository.deleteCard(id);
 }

@@ -38,6 +38,11 @@ export async function createCard(req: Request, res: Response) {
     res.status(201).send();
 }
 
-export async function deleteCard() {
-    //
+export async function deleteCard(req: Request, res: Response) {
+    const { id } = req.params;
+    const { userId: ownerId } = res.locals;
+
+    await cardService.deleteCard(Number(id), Number(ownerId));
+
+    res.status(200).send();
 }
