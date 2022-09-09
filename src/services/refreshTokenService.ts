@@ -39,3 +39,13 @@ export async function refreshSession(oldRefreshToken: string) {
         throw CustomError('error_forbidden', '');
     }
 }
+
+export async function finishSession(oldRefreshToken: string) {
+    const currentRefreshToken = await refreshTokenRepository.findByRefreshToken(oldRefreshToken);
+
+    if (!currentRefreshToken) {
+        throw CustomError('error_not_found', '');
+    }
+
+    await refreshTokenRepository.deleteRefreshToken(currentRefreshToken.id);
+}

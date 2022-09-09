@@ -36,3 +36,20 @@ export async function refresh(req: Request, res: Response) {
 
     res.status(200).send({ accessToken, refreshToken });
 }
+
+export async function logout(req: Request, res: Response) {
+    const { authorization } = req.headers;
+
+    if (!authorization?.startsWith('Bearer ')) {
+        throw CustomError('error_unauthorized', 'Invalid request header');
+    }
+
+    const oldRefreshToken = authorization.replace('Bearer ', '');
+    if (!oldRefreshToken) {
+        throw CustomError('error_unauthorized', 'Invalid request header');
+    }
+
+    await refreshTokenService.finishSession(oldRefreshToken);
+
+    res.status(204).send();
+}
