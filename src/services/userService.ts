@@ -34,7 +34,10 @@ export async function createSession(email: string, password: string) {
         throw CustomError('error_unauthorized', 'Cannot create session');
     }
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string, { expiresIn: '30min' });
+    const accessToken = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET as string, { expiresIn: '30min' });
+    const refreshToken = jwt.sign({ id: user.id }, process.env.REFRESH_TOKEN_SECRET as string, { expiresIn: '1d' });
 
-    return { token };
+    await userRepository.update(user.id, { refreshToken });
+
+    return { accessToken, refreshToken };
 }
