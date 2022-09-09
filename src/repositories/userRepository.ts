@@ -28,10 +28,3 @@ export async function insert(userData: IUserInsertData) {
         data: { email, password },
     });
 }
-
-export async function update(id: string, userData: IUserUpdateData) {
-    await client.user.update({
-        where: { id },
-        data: { ...userData },
-    });
-}
