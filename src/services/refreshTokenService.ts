@@ -12,11 +12,12 @@ export async function refreshSession(oldRefreshToken: string) {
     const currentRefreshToken = await refreshTokenRepository.findByRefreshToken(oldRefreshToken);
 
     if (!currentRefreshToken) {
-        jwt.verify(oldRefreshToken, process.env.REFRESH_TOKEN_SECRET as string, async (err, decoded) => {
-            if (err) throw CustomError('error_forbidden', 'Cannot refresh session');
-
+        try {
+            const decoded = jwt.verify(oldRefreshToken, process.env.REFRESH_TOKEN_SECRET as string);
             await refreshTokenRepository.deleteRefreshTokens((decoded as IToken).id);
-        });
+        } catch {
+            throw CustomError('error_forbidden', 'Cannot refresh session');
+        }
 
         throw CustomError('error_forbidden', 'Cannot refresh session');
     }

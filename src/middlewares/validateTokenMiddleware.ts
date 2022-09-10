@@ -19,14 +19,18 @@ export default async function validateToken(req: Request, res: Response, next: N
         throw CustomError('error_unauthorized', 'Invalid request header');
     }
 
-    const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string);
-    const user = await userService.getById((payload as IToken).id);
+    try {
+        const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string);
+        const user = await userService.getById((payload as IToken).id);
 
-    if (!user) {
+        if (!user) {
+            throw CustomError('error_unauthorized', 'Invalid token');
+        }
+
+        res.locals.userId = user.id;
+
+        next();
+    } catch (err) {
         throw CustomError('error_unauthorized', 'Invalid token');
     }
-
-    res.locals.userId = user.id;
-
-    next();
 }
