@@ -64,5 +64,3 @@ import `thunder-collection_drivenpass.json` and `thunder-environment_drivenpass.
 - accessToken
 - refreshToken
 - BASE_URL
-
-
