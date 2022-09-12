@@ -23,7 +23,7 @@ const newCardSchema = Joi.object({
         }),
     securityCode: Joi.string().required(),
     password: Joi.string().required(),
-    isVirtual: Joi.boolean().required(),
+    isVirtual: Joi.boolean().strict().required(),
     type: Joi.string().valid('credit', 'debit', 'both').required(),
 });
 

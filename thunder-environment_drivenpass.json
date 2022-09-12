@@ -1,0 +1,11 @@
+{
+    "client": "Thunder Client",
+    "environmentName": "drivenpass",
+    "dateExported": "2022-09-12T13:10:49.000Z",
+    "version": "1.0",
+    "variables": [
+        { "name": "refreshToken", "value": "" },
+        { "name": "accessToken", "value": "" },
+        { "name": "BASE_URL", "value": "https://projeto-driven-pass.herokuapp.com" }
+    ]
+}

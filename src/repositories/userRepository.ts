@@ -1,7 +1,9 @@
 import { User } from '@prisma/client';
 import client from '../config/database';
 
-export type IUserInsertData = Omit<User, 'id' | 'createdAt'>;
+export type IUserData = Omit<User, 'id' | 'createdAt'>;
+export type IUserInsertData = Omit<IUserData, 'refreshToken'>;
+export type IUserUpdateData = Partial<IUserData>;
 
 export async function findById(id: string) {
     const result = await client.user.findUnique({
