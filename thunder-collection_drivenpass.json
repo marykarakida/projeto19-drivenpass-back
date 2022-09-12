@@ -1,0 +1,353 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "drivenpass",
+    "dateExported": "2022-09-12T13:10:14.944Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "4c8dc78f-3681-4449-b465-50dfe0662be1",
+            "name": "auth",
+            "containerId": "",
+            "created": "2022-09-06T21:01:42.054Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "8cabd433-3093-461e-a6c8-1550d0293f08",
+            "name": "credentials",
+            "containerId": "",
+            "created": "2022-09-07T01:41:51.126Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "c7b2b6eb-be42-4ed7-b5fb-c86fb4f3f48a",
+            "name": "notes",
+            "containerId": "",
+            "created": "2022-09-07T12:06:53.027Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "cb8a4d4a-29cb-4e6d-b8b6-b876165d53ef",
+            "name": "cards",
+            "containerId": "",
+            "created": "2022-09-07T16:22:51.788Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "ad52876d-187c-413b-b59a-03c885b7aff9",
+            "name": "wifis",
+            "containerId": "",
+            "created": "2022-09-08T18:42:07.916Z",
+            "sortNum": 50000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "f82b002b-1b86-4c05-a950-f4b9c6372e84",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "4c8dc78f-3681-4449-b465-50dfe0662be1",
+            "name": "REGISTER",
+            "url": "{{BASE_URL}}/auth/register",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2022-09-06T21:01:56.440Z",
+            "modified": "2022-09-12T12:53:35.453Z",
+            "headers": [],
+            "params": [],
+            "body": { "type": "json", "raw": "{\n  \"email\": \"usuario@com.br\",\n  \"password\": \"letraLETRA@24\"\n}", "form": [] },
+            "tests": []
+        },
+        {
+            "_id": "db04f5db-fdd9-4194-9a07-4100ee80298c",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "cb8a4d4a-29cb-4e6d-b8b6-b876165d53ef",
+            "name": "CREATE CARD",
+            "url": "{{BASE_URL}}/cards/",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2022-09-07T16:22:56.085Z",
+            "modified": "2022-09-12T13:05:29.124Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"Título Teste\",\n  \"number\": \"12345678912\",\n  \"cardHolderName\": \"USUARIO\",\n  \"expirationDate\": \"09/27\",\n  \"securityCode\": \"345\",\n  \"password\": \"2892\",\n  \"isVirtual\": false,\n  \"type\": \"credit\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "5c765c17-dbef-4d5e-823b-e0bb394baee3",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "ad52876d-187c-413b-b59a-03c885b7aff9",
+            "name": "CREATE WIFI",
+            "url": "{{BASE_URL}}/wifis/",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2022-09-08T18:42:12.020Z",
+            "modified": "2022-09-12T13:06:30.529Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"Título Teste\",\n  \"networkName\": \"Rede\",\n  \"password\": \"senha-generica\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "73b7e06a-7dcf-4358-ac14-013e620ee828",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "4c8dc78f-3681-4449-b465-50dfe0662be1",
+            "name": "LOGIN",
+            "url": "{{BASE_URL}}/auth/login",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2022-09-07T00:39:59.931Z",
+            "modified": "2022-09-12T12:53:39.008Z",
+            "headers": [],
+            "params": [],
+            "body": { "type": "json", "raw": "{\n  \"email\": \"usuario@com.br\",\n  \"password\": \"letraLETRA@24\"\n}", "form": [] },
+            "tests": [
+                { "type": "set-env-var", "custom": "json.accessToken", "action": "setto", "value": "{{accessToken}}" },
+                { "type": "set-env-var", "custom": "json.refreshToken", "action": "setto", "value": "{{refreshToken}}" }
+            ]
+        },
+        {
+            "_id": "39fb778b-18c5-4b74-b5fb-b89a9259214e",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "cb8a4d4a-29cb-4e6d-b8b6-b876165d53ef",
+            "name": "GET ALL CARDS",
+            "url": "{{BASE_URL}}/cards/",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2022-09-07T16:23:01.073Z",
+            "modified": "2022-09-12T12:54:39.025Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "daafe53a-57bc-46e3-89b5-2b9d40b477dc",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "ad52876d-187c-413b-b59a-03c885b7aff9",
+            "name": "GET ALL WIFIS",
+            "url": "{{BASE_URL}}/wifis/",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2022-09-08T18:42:16.548Z",
+            "modified": "2022-09-12T12:54:59.102Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "e7534d3b-bdbe-4510-8fee-f95c4d4567aa",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "8cabd433-3093-461e-a6c8-1550d0293f08",
+            "name": "CREATE CREDENTIAL",
+            "url": "{{BASE_URL}}/credentials",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2022-09-07T01:42:00.957Z",
+            "modified": "2022-09-12T13:02:41.300Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"Titulo Teste\",\n  \"url\": \"https://florimond.dev/en/posts/2018/08/restful-api-design-13-best-practices-to-make-your-users-happy/\",\n  \"username\": \"usuario\",\n  \"password\": \"senha-generica\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "90c271b6-fc55-43d1-9cd0-cecfc2adf78f",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "cb8a4d4a-29cb-4e6d-b8b6-b876165d53ef",
+            "name": "GET CARD BY ID",
+            "url": "{{BASE_URL}}/cards/:id",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2022-09-07T16:23:04.479Z",
+            "modified": "2022-09-12T13:05:46.515Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "e36cfbcd-a912-444e-81c9-f09c79eb6220",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "ad52876d-187c-413b-b59a-03c885b7aff9",
+            "name": "GET WIFI BY ID",
+            "url": "{{BASE_URL}}/wifis/:id",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2022-09-08T18:42:26.870Z",
+            "modified": "2022-09-12T13:07:00.890Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "e604ffe8-8676-404d-8ee3-7af6299421a2",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "8cabd433-3093-461e-a6c8-1550d0293f08",
+            "name": "GET ALL CREDENTIALS",
+            "url": "{{BASE_URL}}/credentials/",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2022-09-07T03:44:07.603Z",
+            "modified": "2022-09-12T12:53:53.592Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "169e8b52-2c32-42e8-8e5f-47a0a752cf43",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "cb8a4d4a-29cb-4e6d-b8b6-b876165d53ef",
+            "name": "DELETE CARD",
+            "url": "{{BASE_URL}}/cards/:id",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2022-09-07T16:23:12.627Z",
+            "modified": "2022-09-12T13:05:56.992Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "bb05e027-7b27-449f-8c06-b908b46851c5",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "ad52876d-187c-413b-b59a-03c885b7aff9",
+            "name": "DELETE WIFI",
+            "url": "{{BASE_URL}}/wifis/:id",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2022-09-08T18:42:31.617Z",
+            "modified": "2022-09-12T13:07:09.242Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "f09a3d12-92f8-4545-adc0-be6630fe9303",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "8cabd433-3093-461e-a6c8-1550d0293f08",
+            "name": "GET CREDENTIAL BY ID",
+            "url": "{{BASE_URL}}/credentials/:id",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2022-09-07T04:07:51.721Z",
+            "modified": "2022-09-12T13:07:26.560Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "c47b8bb5-3b8f-4cca-91f8-751da7a5fa40",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "8cabd433-3093-461e-a6c8-1550d0293f08",
+            "name": "DELETE CREDENTIAL",
+            "url": "{{BASE_URL}}/credentials/:id",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2022-09-07T04:26:52.248Z",
+            "modified": "2022-09-12T13:03:33.922Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "81341ae9-ec06-4422-98f4-e350a2bc77c7",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "c7b2b6eb-be42-4ed7-b5fb-c86fb4f3f48a",
+            "name": "CREATE NOTE",
+            "url": "{{BASE_URL}}/notes",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2022-09-07T12:07:10.136Z",
+            "modified": "2022-09-12T13:04:01.822Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "params": [],
+            "body": { "type": "json", "raw": "{\n  \"title\": \"Título Teste\",\n  \"note\": \"Nota teste\"\n}", "form": [] },
+            "tests": []
+        },
+        {
+            "_id": "5d80199f-fc9c-4474-8dc6-9934dd75b041",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "c7b2b6eb-be42-4ed7-b5fb-c86fb4f3f48a",
+            "name": "GET ALL NOTES",
+            "url": "{{BASE_URL}}/notes/",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2022-09-07T12:22:27.106Z",
+            "modified": "2022-09-12T12:54:20.063Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "14237c58-f844-41f6-8e1b-4697fe2f5faf",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "c7b2b6eb-be42-4ed7-b5fb-c86fb4f3f48a",
+            "name": "GET NOTE BY ID",
+            "url": "{{BASE_URL}}/notes/:id",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2022-09-07T12:30:55.466Z",
+            "modified": "2022-09-12T13:04:25.914Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "f8a0724c-d586-452f-9255-125317f47d40",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "c7b2b6eb-be42-4ed7-b5fb-c86fb4f3f48a",
+            "name": "DELETE NOTE",
+            "url": "{{BASE_URL}}/notes/:id",
+            "method": "DELETE",
+            "sortNum": 100000,
+            "created": "2022-09-07T12:53:38.924Z",
+            "modified": "2022-09-12T13:04:33.135Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "0c977ce0-5ab3-4e20-91f1-5185bcb8483f",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "4c8dc78f-3681-4449-b465-50dfe0662be1",
+            "name": "(BONUS) REFRESH - GET NEW ACCESS TOKEN",
+            "url": "{{BASE_URL}}/auth/refresh",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2022-09-09T14:00:21.540Z",
+            "modified": "2022-09-12T12:53:42.494Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{refreshToken}}" }],
+            "params": [],
+            "tests": [
+                { "type": "set-env-var", "custom": "json.accessToken", "action": "setto", "value": "{{accessToken}}" },
+                { "type": "set-env-var", "custom": "json.refreshToken", "action": "setto", "value": "{{refreshToken}}" }
+            ]
+        },
+        {
+            "_id": "c4b701eb-6421-4e51-b09c-9c744103972e",
+            "colId": "ed10cfce-2fb2-4e2c-993f-07bd450877b6",
+            "containerId": "4c8dc78f-3681-4449-b465-50dfe0662be1",
+            "name": "(BONUS) LOGOUT - DELETE ALL REFRESH TOKENS",
+            "url": "{{BASE_URL}}/auth/logout",
+            "method": "GET",
+            "sortNum": 120000,
+            "created": "2022-09-09T17:05:17.448Z",
+            "modified": "2022-09-12T12:53:46.177Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{refreshToken}}" }],
+            "params": [],
+            "tests": [
+                { "type": "set-env-var", "custom": "null", "action": "setto", "value": "{{accessToken}}" },
+                { "type": "set-env-var", "custom": "null", "action": "setto", "value": "{{refreshToken}}" }
+            ]
+        }
+    ],
+    "settings": { "headers": [], "tests": [], "envId": "6791da3a-3db9-4d40-8735-a80f810093db" }
+}
