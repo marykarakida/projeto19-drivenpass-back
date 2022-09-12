@@ -1,0 +1,636 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Driven Pass",
+        "description": "This API can be used to manage user data and passwords",
+        "version": "1.0.0"
+    },
+    "servers": [{ "url": "https://projeto-driven-pass.herokuapp.com" }],
+    "tags": [
+        { "name": "auth", "description": "User authentication" },
+        { "name": "credentials", "description": "Everything about credentials" },
+        { "name": "notes", "description": "Everything about notes" },
+        { "name": "cards", "description": "Everything about cards" },
+        { "name": "wifis", "description": "Everything about wifis" }
+    ],
+    "paths": {
+        "/auth/register": {
+            "post": {
+                "tags": ["auth"],
+                "summary": "Account creation",
+                "description": "This route is responsible for registering a new account",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "visitor": {
+                                    "value": {
+                                        "email": "visitor@com.br",
+                                        "password": "Password@123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": ["auth"],
+                "summary": "Account access",
+                "description": "This route is responsible for logging into app",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "visitor": {
+                                    "value": {
+                                        "email": "visitor@com.br",
+                                        "password": "Password@123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/auth/refresh": {
+            "get": {
+                "tags": ["auth"],
+                "summary": "Refresh access token",
+                "description": "This route is responsible for getting new access token. Send refresh token generated at login or previous refresh as authorization headers",
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "get": {
+                "tags": ["auth"],
+                "summary": "Logout account",
+                "description": "This route is responsible for logging out of account. Send refresh token generated at login or previous refresh as authorization headers",
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/credentials": {
+            "post": {
+                "tags": ["credentials"],
+                "summary": "Save new credential",
+                "description": "This route is responsible for saving new credential",
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Credential"
+                            },
+                            "examples": {
+                                "credential": {
+                                    "value": {
+                                        "title": "new credential",
+                                        "url": "https://florimond.dev/en/posts/2018/08/restful-api-design-13-best-practices-to-make-your-users-happy/",
+                                        "username": "visitor",
+                                        "password": "senha-generica"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "409": {
+                        "description": "Credential with same title already exists"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["credentials"],
+                "summary": "Get all user credentials",
+                "description": "This route is responsible for getting all user's credential",
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/credentials/{credentialId}": {
+            "get": {
+                "tags": ["credentials"],
+                "summary": "Get specific credential",
+                "description": "This route is responsible for getting a specific user's credential by id",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "credentialId",
+                        "in": "path",
+                        "description": "Id of saved credential",
+                        "required": "true"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Credential not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["credentials"],
+                "summary": "Delete specific credential",
+                "description": "This route is responsible for deletting a specific user's credential by id",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "credentialId",
+                        "in": "path",
+                        "description": "Id of saved credential",
+                        "required": "true"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Credential not found"
+                    }
+                }
+            }
+        },
+        "/notes": {
+            "post": {
+                "tags": ["notes"],
+                "summary": "Save new note",
+                "description": "This route is responsible for saving new note",
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Note"
+                            },
+                            "examples": {
+                                "note": {
+                                    "value": {
+                                        "title": "new note",
+                                        "note": "this is a new note"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "409": {
+                        "description": "Note with same title already exists"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["notes"],
+                "summary": "Get all user notes",
+                "description": "This route is responsible for getting all user's note",
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/notes/{noteId}": {
+            "get": {
+                "tags": ["notes"],
+                "summary": "Get specific note",
+                "description": "This route is responsible for getting a specific user's note by id",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "noteId",
+                        "in": "path",
+                        "description": "Id of saved note",
+                        "required": "true"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Note not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["notes"],
+                "summary": "Delete specific note",
+                "description": "This route is responsible for deletting a specific user's note by id",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "noteId",
+                        "in": "path",
+                        "description": "Id of saved note",
+                        "required": "true"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Note not found"
+                    }
+                }
+            }
+        },
+        "/cards": {
+            "post": {
+                "tags": ["cards"],
+                "summary": "Save new card",
+                "description": "This route is responsible for saving new card",
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Card"
+                            },
+                            "examples": {
+                                "cards": {
+                                    "value": {
+                                        "title": "new card",
+                                        "number": "12345678912",
+                                        "cardHolderName": "USUARIO",
+                                        "expirationDate": "09/27",
+                                        "securityCode": "345",
+                                        "password": "2892",
+                                        "isVirtual": false,
+                                        "type": "credit"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "409": {
+                        "description": "Card with same title already exists"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["cards"],
+                "summary": "Get all user cards",
+                "description": "This route is responsible for getting all user's card",
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/cards/{cardId}": {
+            "get": {
+                "tags": ["cards"],
+                "summary": "Get specific card",
+                "description": "This route is responsible for getting a specific user's card by id",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "cardId",
+                        "in": "path",
+                        "description": "Id of saved card",
+                        "required": "true"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Card not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["cards"],
+                "summary": "Delete specific card",
+                "description": "This route is responsible for deletting a specific user's card by id",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "cardId",
+                        "in": "path",
+                        "description": "Id of saved card",
+                        "required": "true"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Card not found"
+                    }
+                }
+            }
+        },
+        "/wifis": {
+            "post": {
+                "tags": ["wifis"],
+                "summary": "Save new wifi",
+                "description": "This route is responsible for saving new wifi",
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Wifi"
+                            },
+                            "examples": {
+                                "wifis": {
+                                    "value": {
+                                        "title": "new wifi",
+                                        "networkName": "Rede",
+                                        "password": "senha-generica"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "409": {
+                        "description": "Wifi with same title already exists"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["wifis"],
+                "summary": "Get all user wifis",
+                "description": "This route is responsible for getting all user's wifi",
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/wifis/{wifiId}": {
+            "get": {
+                "tags": ["wifis"],
+                "summary": "Get specific wifi",
+                "description": "This route is responsible for getting a specific user's wifi by id",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "wifiId",
+                        "in": "path",
+                        "description": "Id of saved wifi",
+                        "required": "true"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Wifi not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["wifis"],
+                "summary": "Delete specific wifi",
+                "description": "This route is responsible for deletting a specific user's wifi by id",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "wifiId",
+                        "in": "path",
+                        "description": "Id of saved wifi",
+                        "required": "true"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Wifi not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string" },
+                    "email": { "type": "string" },
+                    "password": {
+                        "type": "string",
+                        "description": "8 to 24 characters. Must include uppercase and lowercase letters, a number and a special character. Allowed special characters: ! @ # $ % W"
+                    }
+                }
+            },
+            "Credential": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string" },
+                    "title": { "type": "string", "description": "Must be unique" },
+                    "url": { "type": "string" },
+                    "username": { "type": "string" },
+                    "password": { "type": "string" }
+                }
+            },
+            "Note": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string" },
+                    "title": { "type": "string", "description": "Max 50 character. Must be unique" },
+                    "note": { "type": "string", "description": "Max 1000 character" }
+                }
+            },
+            "Card": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string" },
+                    "title": { "type": "string", "description": "Must be unique" },
+                    "number": { "type": "string", "description": "Must be a numeric string with or without hyphens/white spaces" },
+                    "cardHolderName": { "type": "string", "description": "Must be all capital case" },
+                    "expirationDate": { "type": "string", "description": "Must be a valida date with MM/YY pattern" },
+                    "securityCode": { "type": "string" },
+                    "password": { "type": "string" },
+                    "isVirtual": { "type": "boolean" },
+                    "type": { "type": "string", "description": "Valid values: 'credit', 'debit', 'both'" }
+                }
+            },
+            "Wifi": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string" },
+                    "title": { "type": "string" },
+                    "networkName": { "type": "string" },
+                    "password": { "type": "string" }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
